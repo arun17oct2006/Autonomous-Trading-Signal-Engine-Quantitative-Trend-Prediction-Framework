@@ -6,4 +6,4 @@ numpy<2.0.0
 matplotlib
 xgboost
 scikit-learn
-git+https://github.com/twopirllc/pandas-ta.git
+pandas-ta
