@@ -1,9 +1,9 @@
 streamlit
 yfinance
 requests
-pandas
-numpy
-pandas-ta
+pandas==2.2.2
+numpy<2.0.0
+pandas-ta==0.3.14b0
 matplotlib
 xgboost
 scikit-learn
