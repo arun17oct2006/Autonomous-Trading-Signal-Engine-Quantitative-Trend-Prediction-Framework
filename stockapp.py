@@ -3,7 +3,7 @@ import yfinance as yf
 import requests
 import pandas as pd
 import numpy as np
-import pandas_ta as ta
+
 import matplotlib.pyplot as plt
 from xgboost import XGBRegressor
 from sklearn.ensemble import RandomForestRegressor
@@ -87,7 +87,14 @@ if run_btn:
 
         # Features (Logic Kept Exactly)
         df["return"] = df["close"].pct_change()
-        df["rsi"] = ta.rsi(df["close"], length=14)
+        def compute_rsi(series, period=14):
+                    delta = series.diff()
+                    gain = (delta.where(delta > 0, 0)).rolling(period).mean()
+                    loss = (-delta.where(delta < 0, 0)).rolling(period).mean()
+                    rs = gain / (loss + 1e-9)
+                    return 100 - (100 / (1 + rs))
+
+        df["rsi"] = compute_rsi(df["close"])
         df["rsi_change"] = df["rsi"].diff()
         df["sma_20"] = df["close"].rolling(20).mean()
         df["price_dist_sma"] = (df["close"] - df["sma_20"]) / (df["sma_20"] + 1e-9)
